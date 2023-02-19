@@ -1,0 +1,4 @@
+repository "Fruit Ninja@cuandhno3@cloud.cn"
+  path "/"
+    br "/main"
+    co "/main"
