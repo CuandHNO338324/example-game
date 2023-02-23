@@ -20,9 +20,34 @@ public class GameManager : MonoBehaviour
     }
     private void NewGame()
     {
+        Time.timeScale = 1.0f;
+
+        blade.enabled = true;
+        spawner.enabled = true;
+
         score = 0;
         scoreText.text = score.ToString();
+
+
     }
+
+    private void ClearScene()
+    {
+        Fruit[] fruits = FindObjectsOfType<Fruit>();
+
+        foreach(Fruit fruit in fruits)
+        {
+            Destroy(fruit.gameObject);
+        }
+
+        Bomb[] bombs = FindObjectsOfType<Bomb>();
+
+        foreach(Bomb bomb in bombs)
+        {
+            Destroy(bomb.gameObject);
+        }
+    }
+
     public void IncreaseScore(int amount)
     {
         score+=amount;
@@ -34,6 +59,7 @@ public class GameManager : MonoBehaviour
     {
         blade.enabled = false;
         spawner.enabled = false;
+        StartCoroutine(ExplodeSequence());
     }
 
     private IEnumerator ExplodeSequence()
@@ -46,8 +72,22 @@ public class GameManager : MonoBehaviour
             float t = Mathf.Clamp01(elapsed / duration);
             fadeImage.color = Color.Lerp(Color.clear, Color.white,t);
 
-            Time.timeScale = 1-t;
-            elapsed += Time.deltaTime;
+            Time.timeScale = 1f-t;
+            elapsed += Time.fixedDeltaTime;
+
+            yield return null;
+        }
+
+        yield return new WaitForSecondsRealtime(1f);
+
+        NewGame();
+        elapsed = 0f;
+        while (elapsed < duration)
+        {
+            float t = Mathf.Clamp01(elapsed / duration);
+            fadeImage.color = Color.Lerp(Color.white, Color.clear, t);
+
+            elapsed += Time.fixedDeltaTime;
 
             yield return null;
         }

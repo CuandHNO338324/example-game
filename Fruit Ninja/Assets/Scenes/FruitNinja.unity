@@ -383,7 +383,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &482506454
 Transform:
@@ -431,7 +431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 778103301}
-  fadeImage: {fileID: 0}
+  fadeImage: {fileID: 268912675}
 --- !u!4 &546363397
 Transform:
   m_ObjectHideFlags: 0
